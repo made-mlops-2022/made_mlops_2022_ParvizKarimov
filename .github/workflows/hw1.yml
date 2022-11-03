@@ -1,0 +1,35 @@
+name: 'CI for homework 1'
+
+defaults:
+  working-directory: homework_1
+
+on: 
+  push:
+    branches: homework_1
+  pull_request:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9.12"
+        
+    - name: Install project
+      run: |
+        cd ml_project
+        pip install -e ml_project/
+
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --statistics
+        
+    - name: Test programm
+      run: |
+        python3 ml_project/ml_project/tests/run_tests.py
