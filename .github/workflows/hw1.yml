@@ -34,4 +34,5 @@ jobs:
         
     - name: Test programm
       run: |
+        make_dataset
         python3 ml_project/ml_project/tests/run_tests.py
