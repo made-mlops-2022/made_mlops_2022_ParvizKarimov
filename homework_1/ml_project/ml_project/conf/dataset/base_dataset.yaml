@@ -1,0 +1,18 @@
+folder_path: ml_project/data/raw/
+name: heart_cleveland_upload.csv
+features:
+  categorical:
+    - sex
+    - cp
+    - fbs
+    - restecg
+    - exang
+    - slope
+    - ca
+    - thal
+  numerical:
+    - age
+    - trestbps
+    - chol
+    - thalach
+    - oldpeak

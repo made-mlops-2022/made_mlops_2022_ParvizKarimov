@@ -1,0 +1,9 @@
+defaults:
+  - base_train
+  - model: random_forest
+  - split: stratified
+  - dataset: train_dataset
+  - _self_
+
+model_path: ml_project/models/model_${now:%Y-%m-%d}.joblib
+fit: all

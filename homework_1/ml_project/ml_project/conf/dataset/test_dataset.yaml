@@ -1,0 +1,5 @@
+defaults:
+  - base_dataset
+
+name: fake_heart_cleveland_upload.csv
+target: condition
