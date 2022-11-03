@@ -25,7 +25,6 @@ jobs:
         
     - name: Install project
       run: |
-        cd ml_project
         pip install -e ml_project/
 
     - name: Lint with flake8
