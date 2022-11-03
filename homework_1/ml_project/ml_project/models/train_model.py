@@ -1,20 +1,21 @@
-import joblib
+import json
 import logging
-import pandas as pd
+
 import hydra
-from ml_project.conf.config import TrainConfig, Split, TargetDataset
+import joblib
+import pandas as pd
 from hydra.core.config_store import ConfigStore
 from hydra.utils import instantiate
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score
-import json
+from sklearn.model_selection import train_test_split
 
+from ml_project.conf.config import Split, TargetDataset, TrainConfig
 
 cs = ConfigStore.instance()
-cs.store(name='base_train', node=TrainConfig)
-cs.store(group='split', name='base_stratified_split', node=Split)
-cs.store(group='split', name='base_simple_split', node=Split)
-cs.store(name='train_dataset', node=TargetDataset)
+cs.store(name="base_train", node=TrainConfig)
+cs.store(group="split", name="base_stratified_split", node=Split)
+cs.store(group="split", name="base_simple_split", node=Split)
+cs.store(name="train_dataset", node=TargetDataset)
 
 
 def get_data(file_path: str, target_col: str):
@@ -27,37 +28,47 @@ def get_data(file_path: str, target_col: str):
 
     return X, y
 
+
 @hydra.main(version_base=None, config_path="../conf", config_name="train")
 def train_model(cfg: TrainConfig):
-    X, y = get_data(cfg.dataset.folder_path + cfg.dataset.name, cfg.dataset.target)
+    X, y = get_data(
+        cfg.dataset.folder_path + cfg.dataset.name, cfg.dataset.target
+    )
 
     clf = instantiate(cfg.model)
 
-    if cfg.fit == 'split':
+    if cfg.fit == "split":
         logging.info("Splitting data...")
 
-        if cfg.split.split_method == 'stratified':
-            X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, **cfg.split.params)
+        if cfg.split.split_method == "stratified":
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, stratify=y, **cfg.split.params
+            )
         else:  # split_method == 'simple'
-            X_train, X_test, y_train, y_test = train_test_split(X, y, **cfg.split.params)
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, **cfg.split.params
+            )
 
     logging.info("Fitting classifier...")
 
-    if cfg.fit == 'split':
+    if cfg.fit == "split":
         clf.fit(X_train, y_train)
-        
+
         metrics = {
             "accuracy": accuracy_score(y_test, clf.predict(X_test)),
-            "f1": f1_score(y_test, clf.predict(X_test))
+            "f1": f1_score(y_test, clf.predict(X_test)),
         }
 
         logging.info("Saving metrics...")
 
-        metric_path = cfg.model_path.rpartition('/')[0] + '/metrics.json'
-        with open(metric_path, 'w+') as file:
+        metric_path = cfg.model_path.rpartition("/")[0] + "/metrics.json"
+        with open(metric_path, "w+") as file:
             json.dump(metrics, file)
 
-        logging.info("Metrics saved into %(metric_path)s." % {"metric_path": metric_path})
+        logging.info(
+            "Metrics saved into %(metric_path)s."
+            % {"metric_path": metric_path}
+        )
 
     else:
         clf.fit(X, y)
@@ -69,5 +80,5 @@ def train_model(cfg: TrainConfig):
     logging.info("Training finished.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     train_model()

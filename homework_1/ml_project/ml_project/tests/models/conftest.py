@@ -1,1 +1,0 @@
-from ml_project.models import train_model, predict_model

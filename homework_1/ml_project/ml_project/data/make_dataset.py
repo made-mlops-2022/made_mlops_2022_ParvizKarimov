@@ -1,18 +1,21 @@
 import logging
-from ml_project.conf.config import TargetDataset, Dataset
-from ml_project.features.transformer import DataTransformer
-import pandas as pd
-from hydra.utils import instantiate
-from ml_project.conf.config import DatasetMaker, Preprocessor
-from sklearn.model_selection import train_test_split
+
 import hydra
+import pandas as pd
 from hydra.core.config_store import ConfigStore
+from hydra.utils import instantiate
+
+from ml_project.conf.config import DatasetMaker, Preprocessor
+from ml_project.features.transformer import DataTransformer
 
 cs = ConfigStore.instance()
-cs.store(name='base_dataset_maker', node=DatasetMaker)
-cs.store(group='preprocessing', name='base_preprocessor', node=Preprocessor)
+cs.store(name="base_dataset_maker", node=DatasetMaker)
+cs.store(group="preprocessing", name="base_preprocessor", node=Preprocessor)
 
-@hydra.main(version_base=None, config_path="../conf", config_name="make_dataset")
+
+@hydra.main(
+    version_base=None, config_path="../conf", config_name="make_dataset"
+)
 def make_dataset(cfg: DatasetMaker) -> None:
     logging.info("Loading raw dataset...")
 
@@ -25,7 +28,7 @@ def make_dataset(cfg: DatasetMaker) -> None:
 
     transformer = DataTransformer(
         scaler=instantiate(cfg.preprocessing.scaler),
-        num_features=cfg.features_to_process['numerical']
+        num_features=cfg.features_to_process["numerical"],
     ).fit(df)
     df = transformer.transform(df)
 
@@ -33,9 +36,8 @@ def make_dataset(cfg: DatasetMaker) -> None:
 
     df.to_csv(save_path, index=False)
 
-    logging.info("Dataset saved to %(save_path)s." % {'save_path': save_path})
+    logging.info("Dataset saved to %(save_path)s." % {"save_path": save_path})
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     make_dataset()

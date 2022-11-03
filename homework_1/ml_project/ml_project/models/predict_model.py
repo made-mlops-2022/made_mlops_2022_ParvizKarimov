@@ -1,21 +1,24 @@
-import joblib
 import logging
-import pandas as pd
+
 import hydra
-from ml_project.conf.config import PredictConfig, Dataset
+import joblib
+import pandas as pd
 from hydra.core.config_store import ConfigStore
-from hydra.utils import instantiate
+
+from ml_project.conf.config import Dataset, PredictConfig
 
 cs = ConfigStore.instance()
-cs.store(name='base_predict', node=PredictConfig)
-cs.store(name='test_dataset', node=Dataset)
+cs.store(name="base_predict", node=PredictConfig)
+cs.store(name="test_dataset", node=Dataset)
 
 
 @hydra.main(version_base=None, config_path="../conf", config_name="predict")
 def predict(cfg: PredictConfig):
     logging.info("Loading data...")
 
-    df_predict = pd.read_csv(cfg.dataset.folder_path + cfg.dataset.name).drop('condition', axis=1, errors='ignore')
+    df_predict = pd.read_csv(cfg.dataset.folder_path + cfg.dataset.name).drop(
+        "condition", axis=1, errors="ignore"
+    )
 
     logging.info("Loading model...")
 
@@ -29,5 +32,5 @@ def predict(cfg: PredictConfig):
     logging.info("Prediction done.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     predict()

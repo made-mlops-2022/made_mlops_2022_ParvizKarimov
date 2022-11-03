@@ -1,16 +1,19 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
+
 @dataclass
 class SplitParams:
     shuffle: bool
     test_size: float
-    random_state: int 
+    random_state: int
+
 
 @dataclass
 class Split:
     split_method: str
     params: SplitParams
+
 
 @dataclass
 class Dataset:
@@ -18,9 +21,11 @@ class Dataset:
     folder_path: str
     name: str
 
+
 @dataclass
 class TargetDataset(Dataset):
     target: str
+
 
 @dataclass
 class Preprocessor:
@@ -34,6 +39,7 @@ class TrainConfig:
     fit: str  # Either "all" or "split"
     model: Any
     model_path: str
+
 
 @dataclass
 class PredictConfig:
