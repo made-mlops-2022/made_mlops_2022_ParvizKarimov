@@ -5,9 +5,11 @@ defaults:
 
 on: 
   push:
-    branches: homework_1
+    branches: 
+     - homework_1
   pull_request:
-    branches: main
+    branches: 
+     - main
 
 jobs:
   build:
