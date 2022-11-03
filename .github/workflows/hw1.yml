@@ -1,4 +1,4 @@
-name: 'CI for homework 1'
+name: CI for homework 1
 
 defaults:
   working-directory: homework_1
