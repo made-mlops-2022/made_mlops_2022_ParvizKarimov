@@ -1,7 +1,8 @@
 name: CI for homework 1
 
 defaults:
-  working-directory: homework_1
+  run:
+    working-directory: homework_1
 
 on: 
   push:
