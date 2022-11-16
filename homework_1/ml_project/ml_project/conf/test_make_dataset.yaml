@@ -1,0 +1,16 @@
+defaults:
+  - base_dataset_maker
+  - preprocessing: preprocessing
+  - _self_
+
+folder_path: ml_project/data/raw/
+save_folder_path: ml_project/data/processed/
+name: fake_heart_cleveland_upload.csv
+features_to_process:
+  numerical:
+    - age
+    - trestbps
+    - chol
+    - thalach
+    - oldpeak
+  categorical: null

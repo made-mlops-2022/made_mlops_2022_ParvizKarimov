@@ -1,0 +1,8 @@
+defaults:
+  - base_simple_split
+
+split_method: simple
+params:
+  test_size: 0.1
+  random_state: 1707
+  shuffle: True

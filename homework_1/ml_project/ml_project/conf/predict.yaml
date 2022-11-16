@@ -1,0 +1,7 @@
+defaults:
+  - base_predict
+  - dataset: predict_dataset
+  - _self_
+
+model_path: ml_project/models/model_${now:%Y-%m-%d}.joblib
+predict_path: ml_project/models/predict_${now:%Y-%m-%d}.csv

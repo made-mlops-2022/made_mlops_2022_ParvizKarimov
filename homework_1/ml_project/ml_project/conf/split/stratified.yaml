@@ -1,0 +1,9 @@
+defaults:
+  - base_stratified_split
+
+split_method: stratified
+params:
+  test_size: 0.2
+  random_state: 42
+  shuffle: True
+  

@@ -1,0 +1,5 @@
+_target_: sklearn.svm.SVC
+C: 20
+kernel: rbf
+gamma: scale
+max_iter: -1

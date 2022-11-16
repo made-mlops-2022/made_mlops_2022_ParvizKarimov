@@ -1,0 +1,4 @@
+defaults:
+  - base_preprocessor
+  - scaler: robust
+  - _self_

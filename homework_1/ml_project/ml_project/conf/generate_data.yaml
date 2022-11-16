@@ -1,0 +1,6 @@
+defaults:
+  - base_data_generator
+
+original_folder: ml_project/data/raw/
+name: heart_cleveland_upload.csv
+save_path: ml_project/data/raw/fake_${name}
