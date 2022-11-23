@@ -1,0 +1,6 @@
+data/
+requests_script.py
+README.md
+*.joblib
+__pycache__
+.pytest_cache
