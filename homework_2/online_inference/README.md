@@ -6,6 +6,11 @@ Model inference in `fastapi_app.py`. It contains `/predict` and `/health` endpoi
 
 `/predict` endpoint has some unittests.
 
+To run `requests_script.py` you may need to install respective dependencies that are stored in `local_requirements.txt` file, so consider executing this:
+```
+pip install -r local_requirements.txt
+```
+
 ### Running everything
 
 To run docker:
@@ -14,14 +19,14 @@ To run docker:
 ```docker pull ippk93/mlops_hw```
 
 - Run:
-```docker run -it -p 8000:8000 ippk93/mlops_hw```
+```docker run -d -it -p 8000:8000 --name pk_mlops_hw ippk93/mlops_hw```
 
-Check "workability":
+Check "workability" (from this dir in local machine):
 
 - Run tests: 
-```pytest```
+```docker exec -it pk_mlops_hw pytest```
 
-- Check requests script (from this dir in local machine)
+- Check requests script:
 ```python requests_script.py```
 
 - Via FastAPI Swagger - run in following URL:

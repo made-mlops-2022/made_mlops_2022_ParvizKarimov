@@ -1,4 +1,5 @@
 data/
+local_requirements.txt
 requests_script.py
 README.md
 *.joblib
