@@ -38,7 +38,7 @@ with DAG(
     Variable.set("preprocessor_dir", "data/preprocessor/standard")
     preprocess = DockerOperator(
         image="airflow-preprocess",
-        command="--input-dir /data/raw/{{ ds }} --output-dir /data/processed/{{ ds }} --preprocessor-dir {{ var.value.preprocessor_dir }}/{{ ds }}",
+        command="--input-dir /data/raw/{{ ds }} --output-dir /data/processed/{{ ds }} --preprocessor-dir {{ var.value.preprocessor_dir }}",
         task_id="docker-airflow-preprocess",
         do_xcom_push=False,
         mount_tmp_dir=False,
@@ -57,7 +57,7 @@ with DAG(
     Variable.set("model_dir", "data/models/svc")
     train = DockerOperator(
         image="airflow-train",
-        command="--input-dir /data/processed/{{ ds }} --output-dir {{ var.value.model_dir }}/{{ ds }}",
+        command="--input-dir /data/processed/{{ ds }} --output-dir {{ var.value.model_dir }}",
         task_id="docker-airflow-train",
         do_xcom_push=False,
         mount_tmp_dir=False,

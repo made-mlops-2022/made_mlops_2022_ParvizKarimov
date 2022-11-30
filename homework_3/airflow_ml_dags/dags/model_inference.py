@@ -43,7 +43,7 @@ with DAG(
     wait_for_preprocessor = PythonSensor(
         task_id="wait_for_preprocessor",
         python_callable=wait_for_file,
-        op_kwargs={'path': '{{ var.value.preprocessor_dir }}/{{ ds }}/preprocessor.joblib'},
+        op_kwargs={'path': '{{ var.value.preprocessor_dir }}/preprocessor.joblib'},
         timeout=600,
         poke_interval=10,
         retries=100,
@@ -53,7 +53,7 @@ with DAG(
     wait_for_model = PythonSensor(
         task_id="wait_for_model",
         python_callable=wait_for_file,
-        op_kwargs={'path': "{{ var.value.model_dir }}/{{ ds }}/model.joblib"},
+        op_kwargs={'path': "{{ var.value.model_dir }}/model.joblib"},
         timeout=600,
         poke_interval=10,
         retries=100,
@@ -62,7 +62,7 @@ with DAG(
 
     predict = DockerOperator(
         image="airflow-predict",
-        command="--input-dir /data/raw/{{ ds }} --output-dir /data/predictions/{{ ds }} --preprocessor-dir {{ var.value.preprocessor_dir }}/{{ ds }} --model-dir {{ var.value.model_dir }}/{{ ds }}",
+        command="--input-dir /data/raw/{{ ds }} --output-dir /data/predictions/{{ ds }} --preprocessor-dir {{ var.value.preprocessor_dir }} --model-dir {{ var.value.model_dir }}",
         task_id="docker-airflow-predict",
         do_xcom_push=False,
         mount_tmp_dir=False,
