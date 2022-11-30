@@ -2,6 +2,8 @@
 
 To run everything:
 
+0. Consider changing the value of `DATA_PATH` field in `dags/utils.py` to the path where you want to save your data.
+
 1. Create FERNET_KEY
 
 ```
